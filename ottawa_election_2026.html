@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ottawa 2026 Mayoral Election</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #C8102E;
+    --dark: #1a1a2e;
+    --cream: #faf7f2;
+    --gold: #D4A017;
+    --slate: #3a4a5c;
+    --light-grey: #eef0f3;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Source Sans 3', sans-serif;
+    background: var(--cream);
+    color: var(--dark);
+    scroll-behavior: smooth;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--dark);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    height: 60px;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    color: var(--gold);
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+  nav ul {
+    display: flex;
+    gap: 8px;
+    list-style: none;
+  }
+  nav ul li a {
+    color: #ccd6e8;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    padding: 8px 14px;
+    border-radius: 4px;
+    transition: all 0.2s;
+    text-transform: uppercase;
+  }
+  nav ul li a:hover { background: var(--red); color: #fff; }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, var(--dark) 0%, var(--slate) 60%, #2c3e55 100%);
+    color: white;
+    padding: 100px 60px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(200,16,46,0.2) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .hero::after {
+    content: '🏛️';
+    position: absolute;
+    bottom: 20px; right: 60px;
+    font-size: 7rem;
+    opacity: 0.06;
+  }
+  .hero-tag {
+    display: inline-block;
+    background: var(--red);
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 3px;
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.4rem, 5vw, 4rem);
+    font-weight: 900;
+    line-height: 1.1;
+    max-width: 700px;
+    margin-bottom: 20px;
+  }
+  .hero h1 span { color: var(--gold); }
+  .hero p {
+    font-size: 1.1rem;
+    font-weight: 300;
+    max-width: 560px;
+    line-height: 1.7;
+    color: #bfd0e0;
+    margin-bottom: 36px;
+  }
+  .hero-stats {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+  .stat {
+    text-align: center;
+  }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--gold);
+    display: block;
+  }
+  .stat-label {
+    font-size: 0.75rem;
+    color: #8da8c4;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  /* SECTIONS */
+  section {
+    padding: 80px 60px;
+  }
+  section:nth-child(even) { background: #f0f2f5; }
+
+  .section-tag {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 10px;
+    border-left: 3px solid var(--red);
+    padding-left: 10px;
+  }
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 3vw, 2.8rem);
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 12px;
+    line-height: 1.2;
+  }
+  .section-intro {
+    font-size: 1rem;
+    color: #5a6a7a;
+    max-width: 680px;
+    line-height: 1.7;
+    margin-bottom: 50px;
+  }
+
+  /* KEY FACTS CARDS (Home) */
+  .facts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px;
+    margin-top: 20px;
+  }
+  .fact-card {
+    background: white;
+    border-radius: 10px;
+    padding: 28px 24px;
+    border-top: 4px solid var(--red);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .fact-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.12); }
+  .fact-icon { font-size: 2rem; margin-bottom: 14px; }
+  .fact-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: var(--dark);
+    margin-bottom: 8px;
+  }
+  .fact-card p { font-size: 0.9rem; color: #5a6a7a; line-height: 1.6; }
+
+  /* CANDIDATES */
+  .candidates-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+  }
+  .candidate-card {
+    background: white;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .candidate-card:hover { transform: translateY(-5px); box-shadow: 0 12px 30px rgba(0,0,0,0.14); }
+  .candidate-header {
+    padding: 28px 28px 20px;
+    border-bottom: 1px solid #eee;
+  }
+  .candidate-avatar {
+    width: 70px; height: 70px;
+    border-radius: 50%;
+    background: var(--slate);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    margin-bottom: 16px;
+    border: 3px solid var(--gold);
+  }
+  .candidate-header h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    color: var(--dark);
+    margin-bottom: 4px;
+  }
+  .candidate-role {
+    font-size: 0.8rem;
+    color: var(--red);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .candidate-bio {
+    font-size: 0.88rem;
+    color: #5a6a7a;
+    line-height: 1.65;
+  }
+  .candidate-body { padding: 20px 28px 28px; }
+  .platform-title {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #8a9ab0;
+    margin-bottom: 12px;
+  }
+  .platform-list { list-style: none; }
+  .platform-list li {
+    font-size: 0.88rem;
+    color: var(--dark);
+    padding: 7px 0;
+    border-bottom: 1px solid #f0f0f0;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    line-height: 1.5;
+  }
+  .platform-list li::before { content: '→'; color: var(--red); font-weight: 700; flex-shrink: 0; }
+  .platform-list li:last-child { border-bottom: none; }
+
+  /* ISSUES */
+  .issue-block {
+    background: white;
+    border-radius: 14px;
+    padding: 36px;
+    margin-bottom: 28px;
+    box-shadow: 0 2px 14px rgba(0,0,0,0.06);
+    border-left: 5px solid var(--red);
+  }
+  .issue-block h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: var(--dark);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .issue-desc {
+    font-size: 0.95rem;
+    color: #5a6a7a;
+    line-height: 1.7;
+    margin-bottom: 24px;
+  }
+  .positions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+  }
+  .position-box {
+    background: var(--cream);
+    border-radius: 8px;
+    padding: 16px;
+    border-top: 3px solid var(--slate);
+  }
+  .position-box.sutcliffe { border-color: #2980b9; }
+  .position-box.leiper    { border-color: #27ae60; }
+  .position-box.lawson    { border-color: #8e44ad; }
+  .position-name {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    color: var(--slate);
+  }
+  .position-box.sutcliffe .position-name { color: #2980b9; }
+  .position-box.leiper    .position-name { color: #27ae60; }
+  .position-box.lawson    .position-name { color: #8e44ad; }
+  .position-box p { font-size: 0.85rem; color: #444; line-height: 1.55; }
+
+  /* POLL BAR */
+  .poll-section {
+    background: var(--dark);
+    border-radius: 12px;
+    padding: 28px 32px;
+    margin-top: 40px;
+    color: white;
+  }
+  .poll-section h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: var(--gold);
+    margin-bottom: 4px;
+  }
+  .poll-source { font-size: 0.75rem; color: #8da8c4; margin-bottom: 20px; }
+  .poll-bar-row { margin-bottom: 14px; }
+  .poll-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.82rem;
+    color: #bfd0e0;
+    margin-bottom: 5px;
+  }
+  .bar-outer { background: rgba(255,255,255,0.1); border-radius: 20px; overflow: hidden; height: 10px; }
+  .bar-inner { height: 100%; border-radius: 20px; transition: width 1s; }
+  .bar-sutcliffe { background: #2980b9; width: 28%; }
+  .bar-leiper    { background: #27ae60; width: 10%; }
+  .bar-undecided { background: var(--gold); width: 49%; }
+
+  /* MY CHOICE */
+  .choice-banner {
+    background: linear-gradient(135deg, #1a2a1a 0%, #2a4a2a 100%);
+    border-radius: 16px;
+    padding: 48px;
+    color: white;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 36px;
+  }
+  .choice-banner::before {
+    content: '✊';
+    position: absolute;
+    right: 40px; top: 50%;
+    transform: translateY(-50%);
+    font-size: 8rem;
+    opacity: 0.08;
+  }
+  .choice-tag {
+    display: inline-block;
+    background: #27ae60;
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 3px;
+    margin-bottom: 18px;
+  }
+  .choice-banner h2 {
+    font-family: 'Playfair Display', serif;
+    color: white;
+    font-size: 2.5rem;
+    margin-bottom: 12px;
+  }
+  .choice-banner .slogan {
+    font-size: 1.15rem;
+    color: #a8e0b8;
+    font-style: italic;
+    margin-bottom: 16px;
+  }
+  .choice-banner p {
+    font-size: 0.95rem;
+    color: #c0d8c0;
+    line-height: 1.7;
+    max-width: 600px;
+  }
+
+  .reason-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+    margin-bottom: 36px;
+  }
+  .reason-card {
+    background: white;
+    border-radius: 12px;
+    padding: 26px;
+    border-top: 4px solid #27ae60;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  }
+  .reason-card .num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    color: #27ae60;
+    opacity: 0.3;
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .reason-card h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    color: var(--dark);
+    margin-bottom: 8px;
+  }
+  .reason-card p { font-size: 0.88rem; color: #5a6a7a; line-height: 1.6; }
+
+  .promises-box {
+    background: var(--dark);
+    border-radius: 14px;
+    padding: 36px;
+    color: white;
+  }
+  .promises-box h3 {
+    font-family: 'Playfair Display', serif;
+    color: var(--gold);
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+  }
+  .promise-list { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+  .promise-list li {
+    background: rgba(255,255,255,0.06);
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-size: 0.88rem;
+    color: #bfd0e0;
+    line-height: 1.55;
+    border-left: 3px solid #27ae60;
+  }
+  .promise-list li strong { color: white; display: block; margin-bottom: 3px; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.5px; }
+
+  /* CALL TO ACTION */
+  .cta {
+    background: var(--red);
+    color: white;
+    padding: 60px;
+    text-align: center;
+  }
+  .cta h2 {
+    font-family: 'Playfair Display', serif;
+    color: white;
+    font-size: 2.2rem;
+    margin-bottom: 12px;
+  }
+  .cta p { color: #ffd4dc; font-size: 1rem; margin-bottom: 28px; max-width: 500px; margin-left: auto; margin-right: auto; }
+  .cta-btn {
+    display: inline-block;
+    background: white;
+    color: var(--red);
+    font-weight: 700;
+    font-size: 0.9rem;
+    padding: 14px 32px;
+    border-radius: 6px;
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    transition: transform 0.2s;
+  }
+  .cta-btn:hover { transform: scale(1.05); }
+
+  /* FOOTER */
+  footer {
+    background: #111;
+    color: #5a6a7a;
+    text-align: center;
+    padding: 30px 40px;
+    font-size: 0.8rem;
+    line-height: 1.7;
+  }
+  footer strong { color: #8da8c4; }
+
+  /* DIVIDER */
+  .divider {
+    width: 60px; height: 4px;
+    background: var(--red);
+    border-radius: 2px;
+    margin: 16px 0 32px;
+  }
+
+  @media (max-width: 700px) {
+    section { padding: 60px 24px; }
+    .hero { padding: 70px 24px 60px; }
+    nav { padding: 0 20px; }
+    .hero-stats { gap: 24px; }
+    .choice-banner { padding: 30px 22px; }
+    .promises-box { padding: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">🍁 Ottawa 2026</div>
+  <ul>
+    <li><a href="#home">Home</a></li>
+    <li><a href="#candidates">Candidates</a></li>
+    <li><a href="#issues">Issues</a></li>
+    <li><a href="#mychoice">My Choice</a></li>
+  </ul>
+</nav>
+
+<!-- HOME -->
+<div id="home">
+<div class="hero">
+  <div class="hero-tag">Ottawa Municipal Election</div>
+  <h1>Your City.<br><span>Your Vote.</span><br>October 26, 2026.</h1>
+  <p>Every four years, Ottawa residents choose who leads their city. This election decides the next Mayor — the person who shapes transit, housing, safety, and the daily lives of over a million people.</p>
+  <div class="hero-stats">
+    <div class="stat">
+      <span class="stat-num">Oct 26</span>
+      <span class="stat-label">Election Day</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">3+</span>
+      <span class="stat-label">Mayoral Candidates</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">1M+</span>
+      <span class="stat-label">Ottawa Residents</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">24</span>
+      <span class="stat-label">City Wards</span>
+    </div>
+  </div>
+</div>
+
+<section>
+  <div class="section-tag">Overview</div>
+  <h2>What Is the Ottawa Municipal Election?</h2>
+  <div class="divider"></div>
+  <p class="section-intro">A municipal election chooses local leaders — the people who manage your city's day-to-day services. Ottawa residents will elect a Mayor, 24 City Councillors, and school board trustees on October 26, 2026.</p>
+
+  <div class="facts-grid">
+    <div class="fact-card">
+      <div class="fact-icon">🚌</div>
+      <h3>Transit Crisis</h3>
+      <p>OC Transpo reliability has dropped sharply. Riders experience frequent cancellations, slow LRT service, and reduced frequency — making buses and trains less reliable for daily commuters.</p>
+    </div>
+    <div class="fact-card">
+      <div class="fact-icon">🏠</div>
+      <h3>Housing Costs</h3>
+      <p>Housing affordability is the #2 issue for voters. With rising rents and home prices, many Ottawa families and young people are being priced out of the city they grew up in.</p>
+    </div>
+    <div class="fact-card">
+      <div class="fact-icon">💰</div>
+      <h3>Cost of Living</h3>
+      <p>37% of Ottawa residents say cost of living is the top issue. Many households are struggling with rising taxes, inflation, and reduced city services that they depend on every day.</p>
+    </div>
+    <div class="fact-card">
+      <div class="fact-icon">🛡️</div>
+      <h3>Public Safety</h3>
+      <p>76% of residents are concerned about the future of downtown — including safety, empty storefronts, and homeless encampments. Candidates are debating how to make Ottawa feel safe again.</p>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- CANDIDATES -->
+<section id="candidates">
+  <div class="section-tag">The Race</div>
+  <h2>Meet the Candidates</h2>
+  <div class="divider"></div>
+  <p class="section-intro">Three main candidates have declared for Ottawa's 2026 mayoral race. Each brings different experience and a different vision for the city.</p>
+
+  <div class="candidates-grid">
+
+    <!-- Sutcliffe -->
+    <div class="candidate-card">
+      <div class="candidate-header">
+        <div class="candidate-avatar">🎙️</div>
+        <h3>Mark Sutcliffe</h3>
+        <div class="candidate-role">Incumbent Mayor — Running for Re-Election</div>
+        <p class="candidate-bio">Age 57. Former radio host, TV personality, and business consultant. First elected mayor in 2022. Described as centrist and "middle-of-the-road." Has criticized both the provincial and federal governments for underfunding Ottawa's transit.</p>
+      </div>
+      <div class="candidate-body">
+        <div class="platform-title">Key Platform Ideas</div>
+        <ul class="platform-list">
+          <li>Cut red tape to speed up housing construction</li>
+          <li>Supported Lansdowne 2.0 ($418M redevelopment)</li>
+          <li>Focus on keeping property taxes low</li>
+          <li>Push higher levels of government for more transit funding</li>
+          <li>Promote economic development and city growth</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Leiper -->
+    <div class="candidate-card">
+      <div class="candidate-header">
+        <div class="candidate-avatar">🏘️</div>
+        <h3>Jeff Leiper</h3>
+        <div class="candidate-role">City Councillor, Kitchissippi — Challenger</div>
+        <p class="candidate-bio">Born and raised in Ottawa. Councillor since 2014 (won with 85% in 2018, 72% in 2022). Chair of Ottawa's Planning and Housing Committee. Progressive candidate with deep experience in transit, housing, and neighbourhood services. Gave up his council seat to run for mayor.</p>
+      </div>
+      <div class="candidate-body">
+        <div class="platform-title">Key Platform Ideas</div>
+        <ul class="platform-list">
+          <li>Make transit frequent, reliable, and a first choice</li>
+          <li>Fix declining city services (sidewalks, garbage, parks)</li>
+          <li>Increase affordable housing supply across all wards</li>
+          <li>Opposed reducing LRT service frequencies</li>
+          <li>Voted against the 2025 city budget — more money for services</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Lawson -->
+    <div class="candidate-card">
+      <div class="candidate-header">
+        <div class="candidate-avatar">🔨</div>
+        <h3>Alex Lawson</h3>
+        <div class="candidate-role">Home Builder & Business Owner — Challenger</div>
+        <p class="candidate-bio">Owns a local home framing company. Lives in Dunrobin, grew up in Heron Gate. Previously served on the Kanata–Carleton Conservative Association board. Supported Sutcliffe in 2022 but says city services have declined unacceptably. Has a team of seasoned political strategists behind him.</p>
+      </div>
+      <div class="candidate-body">
+        <div class="platform-title">Key Platform Ideas</div>
+        <ul class="platform-list">
+          <li>Fix housing, affordability, transit & public safety</li>
+          <li>"Hit the undo button" — restore service levels of past</li>
+          <li>Solution-oriented, non-partisan approach</li>
+          <li>Increase public safety and address downtown decline</li>
+          <li>Cut through gridlock — literally and politically</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ISSUES -->
+<section id="issues">
+  <div class="section-tag">What's At Stake</div>
+  <h2>Key Issues in Ottawa</h2>
+  <div class="divider"></div>
+  <p class="section-intro">These three issues are what Ottawa residents care about most heading into October 2026 — and the candidates have very different ideas about how to fix them.</p>
+
+  <!-- Issue 1 -->
+  <div class="issue-block">
+    <h3>🚌 Public Transit</h3>
+    <p class="issue-desc">Ottawa's LRT system has been plagued with breakdowns and OC Transpo has cut service frequencies to save money. This leaves many residents — especially those without cars — stranded or late. In a January 2026 poll, 11% of voters ranked transit reliability as the top issue. For daily commuters, this is a quality-of-life crisis.</p>
+    <div class="positions-grid">
+      <div class="position-box sutcliffe">
+        <div class="position-name">Sutcliffe</div>
+        <p>Blames the province and federal government for short-changing transit funding. Wants to negotiate more money from higher levels of government rather than raising city taxes.</p>
+      </div>
+      <div class="position-box leiper">
+        <div class="position-name">Leiper</div>
+        <p>Strongly opposes cuts to LRT frequency. Believes Ottawa needs to fully fund transit as a city priority so it becomes reliable and frequent — something people <em>choose</em> to use, not a last resort.</p>
+      </div>
+      <div class="position-box lawson">
+        <div class="position-name">Lawson</div>
+        <p>Wants to restore transit to how it used to work — "let's get back to the old Ottawa where transit got you where you needed to go." Focuses on service delivery and results.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Issue 2 -->
+  <div class="issue-block">
+    <h3>🏠 Housing Affordability</h3>
+    <p class="issue-desc">19% of voters name housing affordability as Ottawa's top problem. Rents are rising, homes cost more than ever, and many young people and families are struggling. 82% of residents say housing will influence who they vote for. This is arguably the defining issue of the 2026 race.</p>
+    <div class="positions-grid">
+      <div class="position-box sutcliffe">
+        <div class="position-name">Sutcliffe</div>
+        <p>Has worked to cut red tape to help developers build faster. Emphasizes partnerships with builders and removing bureaucratic barriers to new housing construction.</p>
+      </div>
+      <div class="position-box leiper">
+        <div class="position-name">Leiper</div>
+        <p>As Chair of the Planning and Housing Committee, has hands-on experience. Wants to unlock more affordable units, support zoning reform, and ensure new housing is accessible — not just luxury.</p>
+      </div>
+      <div class="position-box lawson">
+        <div class="position-name">Lawson</div>
+        <p>As an actual home builder, brings a unique industry perspective. Wants to fix the system from the ground up — reducing costs and delays that he personally sees in his business.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Issue 3 -->
+  <div class="issue-block">
+    <h3>🛡️ Public Safety & Downtown</h3>
+    <p class="issue-desc">76% of Ottawa residents are worried about downtown — safety, empty storefronts, homelessness, and encampments. 10% of voters list homelessness as the #1 issue. The city's downtown has struggled to recover post-pandemic, and residents want action.</p>
+    <div class="positions-grid">
+      <div class="position-box sutcliffe">
+        <div class="position-name">Sutcliffe</div>
+        <p>Backed a 5% increase to the Ottawa Police Service budget in 2026. Supports economic development to revitalize downtown and bring activity back to empty spaces.</p>
+      </div>
+      <div class="position-box leiper">
+        <div class="position-name">Leiper</div>
+        <p>Also supported the police budget increase. Believes tackling homelessness requires an upstream approach — building affordable housing so fewer people are on the streets in the first place.</p>
+      </div>
+      <div class="position-box lawson">
+        <div class="position-name">Lawson</div>
+        <p>Emphasizes public safety and wants to make residents feel safe downtown again. Promises real action on encampments and wants downtown to thrive economically.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Poll -->
+  <div class="poll-section">
+    <h4>📊 Voter Poll — January 2026</h4>
+    <div class="poll-source">Source: Abacus Data / Ottawa Real Estate Board survey, 1,000 respondents — voting intention if election held today</div>
+    <div class="poll-bar-row">
+      <div class="poll-label"><span>Mark Sutcliffe</span><span>28%</span></div>
+      <div class="bar-outer"><div class="bar-inner bar-sutcliffe"></div></div>
+    </div>
+    <div class="poll-bar-row">
+      <div class="poll-label"><span>Jeff Leiper</span><span>10%</span></div>
+      <div class="bar-outer"><div class="bar-inner bar-leiper"></div></div>
+    </div>
+    <div class="poll-bar-row">
+      <div class="poll-label"><span>Undecided</span><span>49%</span></div>
+      <div class="bar-outer"><div class="bar-inner bar-undecided"></div></div>
+    </div>
+    <p style="font-size:0.78rem; color:#6a8aaa; margin-top:14px;">Note: Alex Lawson entered the race after this poll was conducted. Nearly half of voters are still undecided — this race is wide open.</p>
+  </div>
+</section>
+
+<!-- MY CHOICE -->
+<section id="mychoice">
+  <div class="section-tag">My Pick</div>
+  <h2>My Choice: Jeff Leiper</h2>
+  <div class="divider"></div>
+
+  <div class="choice-banner">
+    <div class="choice-tag">✅ My Endorsed Candidate</div>
+    <h2>Jeff Leiper for Mayor</h2>
+    <p class="slogan">"Ottawa should work for everyone — not just those who can afford a car or a mortgage."</p>
+    <p>After researching all three candidates, I believe Jeff Leiper is the best choice to lead Ottawa. He has years of real city council experience, a strong track record on housing and transit, and a clear plan to improve the services that everyday residents actually depend on.</p>
+  </div>
+
+  <div class="reason-grid">
+    <div class="reason-card">
+      <div class="num">01</div>
+      <h4>Real Experience That Matters</h4>
+      <p>Leiper has been Ottawa's Chair of the Planning and Housing Committee — the exact job most relevant to the city's biggest problems. He's been in the trenches on housing and transit for over a decade, not just talking about them.</p>
+    </div>
+    <div class="reason-card">
+      <div class="num">02</div>
+      <h4>He Prioritizes Transit</h4>
+      <p>Leiper opposed cuts to LRT frequency and wants to make transit something people <em>choose</em> to ride. For thousands of students, seniors, and workers who depend on buses every day, this matters more than almost anything else.</p>
+    </div>
+    <div class="reason-card">
+      <div class="num">03</div>
+      <h4>He Fights for Services</h4>
+      <p>Unlike Sutcliffe, Leiper voted against the 2025 city budget because it didn't fund services well enough. He believes crumbling sidewalks, overflowing park garbage, and unreliable buses aren't acceptable — and he's willing to push back to fix them.</p>
+    </div>
+    <div class="reason-card">
+      <div class="num">04</div>
+      <h4>Trusted by Voters</h4>
+      <p>Leiper won his ward with 85% of the vote in 2018 and 72% in 2022. These aren't just wins — they're landslides. Residents who know his work trust him deeply, which says a lot about his character.</p>
+    </div>
+  </div>
+
+  <div class="promises-box">
+    <h3>🗳️ Leiper's Key Promises for Ottawa</h3>
+    <ul class="promise-list">
+      <li><strong>Reliable Transit</strong>Make LRT and buses frequent, on-time, and worth riding every day</li>
+      <li><strong>More Affordable Housing</strong>Use his planning expertise to unlock more units at prices people can actually afford</li>
+      <li><strong>Fix City Services</strong>Restore garbage collection, sidewalk maintenance, and park upkeep to the standard residents deserve</li>
+      <li><strong>Downtown Revival</strong>Tackle safety and vacancies to bring life back to Ottawa's core</li>
+      <li><strong>Fiscally Responsible</strong>Spend smarter — not just lower taxes, but ensure every tax dollar actually improves services</li>
+      <li><strong>Whole City Approach</strong>Leiper has pledged to campaign in the suburbs and listen to all of Ottawa, not just urban wards</li>
+    </ul>
+  </div>
+</section>
+
+<!-- CALL TO ACTION -->
+<div class="cta">
+  <h2>Your Vote Counts</h2>
+  <p>Ottawa's election is October 26, 2026. If you're 18 or older and a Canadian citizen living in Ottawa, you can vote. Make your voice heard.</p>
+  <a href="https://ottawa.ca/en/city-hall/elections/voters" class="cta-btn" target="_blank">Learn How to Vote →</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p><strong>Ottawa 2026 Mayoral Election — Informational Website</strong></p>
+  <p>Created for school civics project. All information sourced from CBC News, Wikipedia, Ottawa Real Estate Board / Abacus Data, and the City of Ottawa website.<br>
+  Sources: CBC (Jan 13, 2026 & Jan 23, 2026), Wikipedia – 2026 Ottawa Municipal Election, OREB–Abacus Data Survey (Dec 2025), City of Ottawa Elections Office.</p>
+</footer>
+
+</body>
+</html>
