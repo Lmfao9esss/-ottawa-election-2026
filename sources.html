@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sources — Ottawa 2026 Mayoral Election</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #C8102E;
+    --dark: #1a1a2e;
+    --cream: #faf7f2;
+    --gold: #D4A017;
+    --slate: #3a4a5c;
+    --light-grey: #eef0f3;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Source Sans 3', sans-serif;
+    background: var(--cream);
+    color: var(--dark);
+    scroll-behavior: smooth;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--dark);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    height: 60px;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    color: var(--gold);
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+  nav ul {
+    display: flex;
+    gap: 8px;
+    list-style: none;
+  }
+  nav ul li a {
+    color: #ccd6e8;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    padding: 8px 14px;
+    border-radius: 4px;
+    transition: all 0.2s;
+    text-transform: uppercase;
+  }
+  nav ul li a:hover { background: var(--red); color: #fff; }
+  nav ul li a.active { background: var(--red); color: #fff; }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, var(--dark) 0%, var(--slate) 60%, #2c3e55 100%);
+    color: white;
+    padding: 80px 60px 70px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(200,16,46,0.2) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .hero::after {
+    content: '📚';
+    position: absolute;
+    bottom: 20px; right: 60px;
+    font-size: 7rem;
+    opacity: 0.06;
+  }
+  .hero-tag {
+    display: inline-block;
+    background: var(--red);
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 3px;
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 900;
+    line-height: 1.1;
+    max-width: 700px;
+    margin-bottom: 16px;
+  }
+  .hero h1 span { color: var(--gold); }
+  .hero p {
+    font-size: 1rem;
+    font-weight: 300;
+    max-width: 560px;
+    line-height: 1.7;
+    color: #bfd0e0;
+  }
+
+  /* SECTIONS */
+  section { padding: 70px 60px; }
+  section:nth-child(even) { background: #f0f2f5; }
+
+  .section-tag {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 10px;
+    border-left: 3px solid var(--red);
+    padding-left: 10px;
+  }
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.6rem, 2.5vw, 2.4rem);
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 10px;
+    line-height: 1.2;
+  }
+  .section-intro {
+    font-size: 0.95rem;
+    color: #5a6a7a;
+    max-width: 680px;
+    line-height: 1.7;
+    margin-bottom: 40px;
+  }
+  .divider {
+    width: 60px; height: 4px;
+    background: var(--red);
+    border-radius: 2px;
+    margin: 14px 0 28px;
+  }
+
+  /* USAGE KEY */
+  .usage-key {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 40px;
+  }
+  .key-pill {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: white;
+    border-radius: 30px;
+    padding: 8px 16px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--dark);
+    box-shadow: 0 1px 6px rgba(0,0,0,0.08);
+  }
+  .key-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .dot-home     { background: #e67e22; }
+  .dot-cands    { background: #2980b9; }
+  .dot-issues   { background: #27ae60; }
+  .dot-choice   { background: #8e44ad; }
+  .dot-poll     { background: var(--gold); }
+  .dot-general  { background: var(--slate); }
+
+  /* SOURCE CARDS */
+  .sources-stack { display: flex; flex-direction: column; gap: 20px; }
+
+  .source-card {
+    background: white;
+    border-radius: 12px;
+    padding: 26px 28px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 16px;
+    align-items: start;
+    transition: transform 0.18s, box-shadow 0.18s;
+    border-left: 5px solid var(--slate);
+  }
+  .source-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.11);
+  }
+
+  .source-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: var(--red);
+    opacity: 0.18;
+    line-height: 1;
+    grid-column: 1 / -1;
+    margin-bottom: -6px;
+  }
+
+  .source-body { min-width: 0; }
+
+  .source-outlet {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #8a9ab0;
+    margin-bottom: 5px;
+  }
+
+  .source-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    color: var(--dark);
+    margin-bottom: 8px;
+    line-height: 1.35;
+  }
+
+  .source-desc {
+    font-size: 0.85rem;
+    color: #5a6a7a;
+    line-height: 1.6;
+    margin-bottom: 12px;
+  }
+
+  .source-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .source-date {
+    font-size: 0.75rem;
+    color: #8a9ab0;
+    font-weight: 600;
+  }
+
+  .used-in {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+
+  .tag {
+    font-size: 0.67rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    padding: 3px 9px;
+    border-radius: 20px;
+    text-transform: uppercase;
+  }
+  .tag-home   { background: #fef3e2; color: #c0632a; }
+  .tag-cands  { background: #eaf4fd; color: #2471a3; }
+  .tag-issues { background: #eafaf1; color: #1e8449; }
+  .tag-choice { background: #f5eef8; color: #76448a; }
+  .tag-poll   { background: #fefce8; color: #9a7d0a; }
+
+  .source-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--red);
+    text-decoration: none;
+    letter-spacing: 0.3px;
+    transition: opacity 0.15s;
+  }
+  .source-link:hover { opacity: 0.7; }
+  .source-link::after { content: '↗'; font-size: 0.75rem; }
+
+  /* SUMMARY BOX */
+  .summary-box {
+    background: var(--dark);
+    border-radius: 14px;
+    padding: 36px;
+    color: white;
+    margin-top: 50px;
+  }
+  .summary-box h3 {
+    font-family: 'Playfair Display', serif;
+    color: var(--gold);
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+  }
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+  }
+  .summary-item {
+    background: rgba(255,255,255,0.06);
+    border-radius: 8px;
+    padding: 16px;
+    border-left: 3px solid var(--red);
+  }
+  .summary-item strong {
+    display: block;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: #8da8c4;
+    margin-bottom: 6px;
+  }
+  .summary-item span {
+    font-size: 0.88rem;
+    color: #e0eaf5;
+    line-height: 1.5;
+  }
+
+  /* FOOTER */
+  footer {
+    background: #111;
+    color: #5a6a7a;
+    text-align: center;
+    padding: 30px 40px;
+    font-size: 0.8rem;
+    line-height: 1.7;
+  }
+  footer strong { color: #8da8c4; }
+
+  @media (max-width: 700px) {
+    section { padding: 50px 20px; }
+    .hero { padding: 60px 20px 50px; }
+    nav { padding: 0 16px; }
+    .source-card { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">🍁 Ottawa 2026</div>
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="index.html#candidates">Candidates</a></li>
+    <li><a href="index.html#issues">Issues</a></li>
+    <li><a href="index.html#mychoice">My Choice</a></li>
+    <li><a href="sources.html" class="active">Sources</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag">Bibliography & Citations</div>
+  <h1>Where the <span>Facts</span> Come From</h1>
+  <p>Every claim on this website is backed by a real source. This page lists all 9 sources used, which section each one supports, and a direct link to the original article or report.</p>
+</div>
+
+<!-- MAIN CONTENT -->
+<section>
+  <div class="section-tag">How to Read This Page</div>
+  <h2>Source Section Guide</h2>
+  <div class="divider"></div>
+  <p class="section-intro">Each source card below is colour-coded to show which section(s) of the main website it supports. Use the key below to understand what each tag means.</p>
+
+  <div class="usage-key">
+    <div class="key-pill"><div class="key-dot dot-home"></div> Used in: Home / Overview</div>
+    <div class="key-pill"><div class="key-dot dot-cands"></div> Used in: Candidates</div>
+    <div class="key-pill"><div class="key-dot dot-issues"></div> Used in: Key Issues</div>
+    <div class="key-pill"><div class="key-dot dot-choice"></div> Used in: My Choice</div>
+    <div class="key-pill"><div class="key-dot dot-poll"></div> Used in: Voter Poll</div>
+  </div>
+
+  <div class="sources-stack">
+
+    <!-- SOURCE 1 -->
+    <div class="source-card" style="border-color: #2980b9;">
+      <div class="source-num">01</div>
+      <div class="source-body">
+        <div class="source-outlet">Wikipedia</div>
+        <div class="source-title">2026 Ottawa Municipal Election — Wikipedia</div>
+        <div class="source-desc">
+          Used across the whole site — candidates, issues, and poll sections.
+        </div>
+        <div class="source-meta">
+          <span class="source-date">Last updated: March 2026</span>
+          <div class="used-in">
+            <span class="tag tag-home">Home</span>
+            <span class="tag tag-cands">Candidates</span>
+            <span class="tag tag-issues">Issues</span>
+            <span class="tag tag-poll">Poll</span>
+          </div>
+        </div>
+        <a class="source-link" href="https://en.wikipedia.org/wiki/2026_Ottawa_municipal_election" target="_blank">en.wikipedia.org — 2026 Ottawa Municipal Election</a>
+      </div>
+    </div>
+
+    <!-- SOURCE 2 -->
+    <div class="source-card" style="border-color: #e74c3c;">
+      <div class="source-num">02</div>
+      <div class="source-body">
+        <div class="source-outlet">CBC News</div>
+        <div class="source-title">Coun. Jeff Leiper Eyes Mayoral Run Against Mark Sutcliffe</div>
+        <div class="source-desc">
+          Used for the Leiper candidate card and My Choice section.
+        </div>
+        <div class="source-meta">
+          <span class="source-date">Published: June 25, 2025</span>
+          <div class="used-in">
+            <span class="tag tag-cands">Candidates</span>
+            <span class="tag tag-issues">Issues</span>
+            <span class="tag tag-choice">My Choice</span>
+          </div>
+        </div>
+        <a class="source-link" href="https://www.cbc.ca/news/canada/ottawa/ottawa-leiper-mayoral-run-1.7569914" target="_blank">cbc.ca — Leiper Mayoral Run</a>
+      </div>
+    </div>
+
+    <!-- SOURCE 3 -->
+    <div class="source-card" style="border-color: #e74c3c;">
+      <div class="source-num">03</div>
+      <div class="source-body">
+        <div class="source-outlet">CBC News</div>
+        <div class="source-title">Homebuilder Alex Lawson Plans to Run for Ottawa Mayor</div>
+        <div class="source-desc">
+          Used for the Lawson candidate card and issues section.
+        </div>
+        <div class="source-meta">
+          <span class="source-date">Published: January 23, 2026</span>
+          <div class="used-in">
+            <span class="tag tag-cands">Candidates</span>
+            <span class="tag tag-issues">Issues</span>
+          </div>
+        </div>
+        <a class="source-link" href="https://www.cbc.ca/news/canada/ottawa/alex-lawson-ottawa-mayor-race-2026-9.7057326" target="_blank">cbc.ca — Alex Lawson Mayor</a>
+      </div>
+    </div>
+
+    <!-- SOURCE 4 -->
+    <div class="source-card" style="border-color: #e74c3c;">
+      <div class="source-num">04</div>
+      <div class="source-body">
+        <div class="source-outlet">CBC News</div>
+        <div class="source-title">Sea of Incumbent Ottawa Councillors Planning to Seek Re-Election in 2026</div>
+        <div class="source-desc">
+          Used for the Home overview and candidate background info.
+        </div>
+        <div class="source-meta">
+          <span class="source-date">Published: January 13, 2026</span>
+          <div class="used-in">
+            <span class="tag tag-home">Home</span>
+            <span class="tag tag-cands">Candidates</span>
+          </div>
+        </div>
+        <a class="source-link" href="https://www.cbc.ca/news/canada/ottawa/sea-of-incumbent-councillors-planning-to-seek-re-election-in-2026-9.7042609" target="_blank">cbc.ca — Incumbents 2026</a>
+      </div>
+    </div>
+
+    <!-- SOURCE 5 -->
+    <div class="source-card" style="border-color: #27ae60;">
+      <div class="source-num">05</div>
+      <div class="source-body">
+        <div class="source-outlet">Ottawa Real Estate Board (OREB) / Abacus Data</div>
+        <div class="source-title">Housing and Affordability Top Voter Concerns as Ottawa Heads Toward 2026 Elections</div>
+        <div class="source-desc">
+          The main source for all poll numbers and voter priority statistics used in the Issues and Home sections.
+        </div>
+        <div class="source-meta">
+          <span class="source-date">Published: January 16, 2026 (survey conducted Dec. 10–22, 2025)</span>
+          <div class="used-in">
+            <span class="tag tag-home">Home</span>
+            <span class="tag tag-issues">Issues</span>
+            <span class="tag tag-poll">Poll</span>
+          </div>
+        </div>
+        <a class="source-link" href="https://www.oreb.ca/newsroom/housing-and-affordability-top-voter-concerns-as-ottawa-heads-toward-2026-elections/" target="_blank">oreb.ca — OREB / Abacus Poll</a>
+      </div>
+    </div>
+
+    <!-- SOURCE 6 -->
+    <div class="source-card" style="border-color: #27ae60;">
+      <div class="source-num">06</div>
+      <div class="source-body">
+        <div class="source-outlet">Ottawa Real Estate Board (OREB) / Abacus Data</div>
+        <div class="source-title">Housing and Affordability Take Centre Stage in Ottawa's 2026 Municipal Election</div>
+        <div class="source-desc">
+          Additional poll data used in the voter poll section and candidate overview.
+        </div>
+        <div class="source-meta">
+          <span class="source-date">Published: January 2026</span>
+          <div class="used-in">
+            <span class="tag tag-poll">Poll</span>
+            <span class="tag tag-cands">Candidates</span>
+          </div>
+        </div>
+        <a class="source-link" href="https://www.oreb.ca/newsroom/housing-and-affordability-take-centre-stage-in-ottawas-2026-municipal-election/" target="_blank">oreb.ca — Centre Stage Release</a>
+      </div>
+    </div>
+
+    <!-- SOURCE 7 -->
+    <div class="source-card" style="border-color: #8e44ad;">
+      <div class="source-num">07</div>
+      <div class="source-body">
+        <div class="source-outlet">Jeff Leiper — Wikipedia</div>
+        <div class="source-title">Jeff Leiper — Wikipedia Biography</div>
+        <div class="source-desc">
+          Used for Leiper's candidate card and My Choice section.
+        </div>
+        <div class="source-meta">
+          <span class="source-date">Last updated: January 2026</span>
+          <div class="used-in">
+            <span class="tag tag-cands">Candidates</span>
+            <span class="tag tag-choice">My Choice</span>
+          </div>
+        </div>
+        <a class="source-link" href="https://en.wikipedia.org/wiki/Jeff_Leiper" target="_blank">en.wikipedia.org — Jeff Leiper</a>
+      </div>
+    </div>
+
+    <!-- SOURCE 8 -->
+    <div class="source-card" style="border-color: #e67e22;">
+      <div class="source-num">08</div>
+      <div class="source-body">
+        <div class="source-outlet">CTV News Ottawa</div>
+        <div class="source-title">Unofficial Race Begins for Mayor of Ottawa in 2026 Election</div>
+        <div class="source-desc">
+          Used in the My Choice section — cited directly in the endorsement paragraph.
+        </div>
+        <div class="source-meta">
+          <span class="source-date">Published: June 27, 2025</span>
+          <div class="used-in">
+            <span class="tag tag-choice">My Choice</span>
+            <span class="tag tag-cands">Candidates</span>
+          </div>
+        </div>
+        <a class="source-link" href="https://www.ctvnews.ca/ottawa/article/unofficial-race-begins-for-mayor-of-ottawa-in-2026-election/" target="_blank">ctvnews.ca — Unofficial Race Begins</a>
+      </div>
+    </div>
+
+    <!-- SOURCE 9 -->
+    <div class="source-card" style="border-color: var(--gold);">
+      <div class="source-num">09</div>
+      <div class="source-body">
+        <div class="source-outlet">City of Ottawa — Official Website</div>
+        <div class="source-title">City of Ottawa Elections Office — How to Vote</div>
+        <div class="source-desc">
+          Linked in the "Learn How to Vote" button at the bottom of the main page.
+        </div>
+        <div class="source-meta">
+          <span class="source-date">City of Ottawa — Official Resource</span>
+          <div class="used-in">
+            <span class="tag tag-home">Home / CTA</span>
+          </div>
+        </div>
+        <a class="source-link" href="https://ottawa.ca/en/city-hall/elections/voters" target="_blank">ottawa.ca — How to Vote</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SUMMARY BOX -->
+  <div class="summary-box">
+    <h3>📋 Source Summary at a Glance</h3>
+    <div class="summary-grid">
+      <div class="summary-item">
+        <strong>Total Sources Used</strong>
+        <span>9 sources across 5 types of media</span>
+      </div>
+      <div class="summary-item">
+        <strong>Primary Poll Source</strong>
+        <span>OREB / Abacus Data, Dec. 2025 survey — 1,000 Ottawa residents</span>
+      </div>
+      <div class="summary-item">
+        <strong>Candidate Profiles</strong>
+        <span>Wikipedia biographies + CBC News original reporting</span>
+      </div>
+      <div class="summary-item">
+        <strong>Issues Section</strong>
+        <span>CBC News articles, OREB/Abacus poll, Wikipedia election article</span>
+      </div>
+      <div class="summary-item">
+        <strong>My Choice Section</strong>
+        <span>CBC News (Leiper), CTV News (race launch), Jeff Leiper Wikipedia</span>
+      </div>
+      <div class="summary-item">
+        <strong>Official City Source</strong>
+        <span>City of Ottawa Elections Office — voter eligibility</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p><strong>Ottawa 2026 Mayoral Election — Informational Website</strong></p>
+  <p>Created for a school civics project. All information sourced from CBC News, Wikipedia, Ottawa Real Estate Board / Abacus Data, CTV News Ottawa, and the City of Ottawa website.<br>
+  Sources: CBC (June 2025, Jan. 13 & 23, 2026), Wikipedia – 2026 Ottawa Municipal Election, Jeff Leiper Wikipedia, OREB–Abacus Data Survey (Dec. 2025), CTV News Ottawa (June 2025), City of Ottawa Elections Office.</p>
+</footer>
+
+</body>
+</html>
